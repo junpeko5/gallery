@@ -4,7 +4,11 @@ require_once("config.php");
 
 class Database {
 
-    private $connection;
+    public $connection;
+
+    function __construct() {
+        $this->open_db_connection();
+    }
 
     public function open_db_connection() {
 
@@ -14,9 +18,17 @@ class Database {
             die("Database connection failed badly" . mysqli_error());
         }
     }
+
+    public function query($sql) {
+        $result = mysqli_query($this->connection, $sql);
+        if (!$result) {
+            die("Query Failed");
+        }
+
+        return $result;
+    }
 }
 
 $database = new Database();
 
-$database->open_db_connection();
 
