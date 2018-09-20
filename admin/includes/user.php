@@ -20,8 +20,12 @@ class User {
     public static function find_this_query($sql) {
         global $database;
         $result_set = $database->query($sql);
+        $the_object_array = array();
 
-        return $result_set;
+        while($row = mysqli_fetch_array($result_set)) {
+            $the_object_array[] = self::instantiation($row);
+        }
+        return $the_object_array;
     }
 
     public static function instantiation($the_record) {
@@ -43,6 +47,9 @@ class User {
 
     private function has_the_attribute($the_attribute) {
         $object_properties = get_object_vars($this);
+        echo '<pre>';
+        print_r($object_properties);
+        echo '</pre>';
         return array_key_exists($the_attribute, $object_properties);
     }
 }
