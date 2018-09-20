@@ -39,7 +39,7 @@ class User {
 
         foreach ($the_record as $the_attribute => $value) {
             if ($the_object->has_the_attribute($the_attribute)) {
-                $the_object->the_attribute = $value;
+                $the_object->$the_attribute = $value;
             }
         }
         return $the_object;
@@ -50,6 +50,9 @@ class User {
         echo '<pre>';
         print_r($object_properties);
         echo '</pre>';
+        echo $the_attribute;
+        echo '<br>';
+        var_dump(array_key_exists($the_attribute, $object_properties));
         return array_key_exists($the_attribute, $object_properties);
     }
 }
