@@ -12,9 +12,8 @@ class User {
     }
 
     public static function find_user_by_id($user_id) {
-        $result_set = self::find_this_query("SELECT * FROM users WHERE id = $user_id LIMIT 1");
-        $found_user = mysqli_fetch_array($result_set);
-        return $found_user;
+        $the_result_array = self::find_this_query("SELECT * FROM users WHERE id = $user_id LIMIT 1");
+        return !empty($the_result_array) ? array_shift($the_result_array) : false;
     }
 
     public static function find_this_query($sql) {
@@ -47,12 +46,12 @@ class User {
 
     private function has_the_attribute($the_attribute) {
         $object_properties = get_object_vars($this);
-        echo '<pre>';
-        print_r($object_properties);
-        echo '</pre>';
-        echo $the_attribute;
-        echo '<br>';
-        var_dump(array_key_exists($the_attribute, $object_properties));
+//        echo '<pre>';
+//        print_r($object_properties);
+//        echo '</pre>';
+//        echo $the_attribute;
+//        echo '<br>';
+//        var_dump(array_key_exists($the_attribute, $object_properties));
         return array_key_exists($the_attribute, $object_properties);
     }
 }
