@@ -98,10 +98,10 @@ class User {
             UPDATE
                 users
             SET
-                username = $username,
-                password = $password,
-                first_name = $first_name,
-                last_name = $last_name
+                username = '$username',
+                password = '$password',
+                first_name = '$first_name',
+                last_name = '$last_name'
             WHERE
                 id = $id
         ";

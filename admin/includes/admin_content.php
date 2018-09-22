@@ -32,14 +32,18 @@
 
 //            $picktures = new Pictures();
 
-            $user = new User();
-            $user->username = "Example_username";
-            $user->password = "Example_password";
-            $user->first_name = "John";
-            $user->last_name = "Doe";
+//            $user = new User();
+//            $user->username = "Example_username";
+//            $user->password = "Example_password";
+//            $user->first_name = "John";
+//            $user->last_name = "Doe";
+//
+//            $user->create();
 
-            $user->create();
+            $user = User::find_user_by_id(2);
+            $user->last_name = "Williams";
 
+            $user->update();
             ?>
             <ol class="breadcrumb">
                 <li>
