@@ -115,6 +115,7 @@ class User {
         $sql = "
             DELETE FROM users WHERE id = '$this->id' LIMIT 1
         ";
+        $database->query($sql);
         return (mysqli_affected_rows($database->connection) == 1) ? true : false;
 
     }

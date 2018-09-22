@@ -45,6 +45,8 @@
 //
 //            $user->update();
 
+//            $user = User::find_user_by_id(5);
+//            $ret =$user->delete();
 
             ?>
             <ol class="breadcrumb">
