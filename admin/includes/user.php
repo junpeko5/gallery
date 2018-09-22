@@ -1,6 +1,8 @@
 <?php
 
 class User {
+
+    protected static $db_table = "users";
     public $id;
     public $username;
     public $password;
@@ -73,7 +75,7 @@ class User {
         $last_name = $database->escape_string($this->last_name);
         $sql = "
             INSERT INTO
-                users
+                " . self::$db_table . "
                 (username, password, first_name, last_name) 
             VALUES
             (
@@ -100,7 +102,7 @@ class User {
         $last_name = $database->escape_string($this->last_name);
         $sql = "
             UPDATE
-                users
+                " . self::$db_table . "
             SET
                 username = '$username',
                 password = '$password',
@@ -117,7 +119,7 @@ class User {
         global $database;
         $this->id = $database->escape_string($this->id);
         $sql = "
-            DELETE FROM users WHERE id = '$this->id' LIMIT 1
+            DELETE FROM " . self::$db_table . " WHERE id = '$this->id' LIMIT 1
         ";
         $database->query($sql);
         return (mysqli_affected_rows($database->connection) == 1) ? true : false;

@@ -45,16 +45,19 @@
 //
 //            $user->update();
 
-//            $user = User::find_user_by_id(5);
+//            $user = User::find_user_by_id(8);
 //            $ret =$user->delete();
 
 //            $user = User::find_user_by_id(4);
 //            $user->password = "justpassword";
 //            $user->save();
 
-//            $user = new User();
-//            $user->username = "WHATEVER_2000";
-//            $user->save();
+            $user = new User();
+            $user->username = "takuya";
+            $user->password = "takuya";
+            $user->save();
+
+
 
             ?>
             <ol class="breadcrumb">
