@@ -26,11 +26,19 @@
 //                    echo $user->username . "<br>";
 //                    echo $user->id . "<br>";
 //                }
-
-            $found_user = User::find_user_by_id(2);
-            echo $found_user->username;
+//
+//            $found_user = User::find_user_by_id(2);
+//            echo $found_user->username;
 
 //            $picktures = new Pictures();
+
+            $user = new User();
+            $user->username = "Example_username";
+            $user->password = "Example_password";
+            $user->first_name = "John";
+            $user->last_name = "Doe";
+
+            $user->create();
 
             ?>
             <ol class="breadcrumb">

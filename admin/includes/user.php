@@ -63,16 +63,20 @@ class User {
 
     public function create() {
         global $database;
+        $username = $database->escape_string($this->username);
+        $password = $database->escape_string($this->password);
+        $first_name = $database->escape_string($this->first_name);
+        $last_name = $database->escape_string($this->last_name);
         $sql = "
             INSERT INTO
                 users
                 (username, password, first_name, last_name) 
             VALUES
             (
-                '$database->escape_string($this->username)',
-                '$database->escape_string($this->password)',
-                '$database->escape_string($this->first_name)',
-                '$database->escape_string($this->last_name)'
+                '$username',
+                '$password',
+                '$first_name',
+                '$last_name'
             )
         ";
         if ($database->query($sql)) {
