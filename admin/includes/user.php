@@ -86,4 +86,26 @@ class User {
             return false;
         }
     }
+
+    public function update() {
+        global $database;
+        $id = $database->escape_string($this->id);
+        $username = $database->escape_string($this->username);
+        $password = $database->escape_string($this->password);
+        $first_name = $database->escape_string($this->first_name);
+        $last_name = $database->escape_string($this->last_name);
+        $sql = "
+            UPDATE
+                users
+            SET
+                username = $username,
+                password = $password,
+                first_name = $first_name,
+                last_name = $last_name
+            WHERE
+                id = $id
+        ";
+        $database->query($sql);
+        return (mysqli_affected_rows($database->connection) == 1) ? true : false;
+    }
 }
