@@ -32,10 +32,13 @@ class User {
         $username = $database->escape_string($username);
         $password = $database->escape_string($password);
 
-        $sql = "SELECT * FROM users WHERE ";
-        $sql .= "username = '{$username}' ";
-        $sql .= "AND password = '{$password}' ";
-        $sql .= " LIMIT 1";
+        $sql = "
+            SELECT * 
+            FROM users 
+            WHERE username = '{$username}' 
+            AND password = '{$password}' 
+            LIMIT 1
+        ";
 
         $the_result_array = self::find_this_query($sql);
         return !empty($the_result_array) ? array_shift($the_result_array) : false;
@@ -56,5 +59,27 @@ class User {
     private function has_the_attribute($the_attribute) {
         $object_properties = get_object_vars($this);
         return array_key_exists($the_attribute, $object_properties);
+    }
+
+    public function create() {
+        global $database;
+        $sql = "
+            INSERT INTO
+                users
+                (username, password, first_name, last_name) 
+            VALUES
+            (
+                '$database->escape_string($this->username)',
+                '$database->escape_string($this->password)',
+                '$database->escape_string($this->first_name)',
+                '$database->escape_string($this->last_name)'
+            )
+        ";
+        if ($database->query($sql)) {
+            $this->id = $database->the_insert_id();
+            return true;
+        } else {
+            return false;
+        }
     }
 }
