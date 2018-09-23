@@ -85,10 +85,7 @@ class User {
         global $database;
 
         $properties = $this->properties();
-//        $username = $database->escape_string($this->username);
-//        $password = $database->escape_string($this->password);
-//        $first_name = $database->escape_string($this->first_name);
-//        $last_name = $database->escape_string($this->last_name);
+
         $sql = "
             INSERT INTO
                 " . self::$db_table . "
@@ -107,22 +104,25 @@ class User {
 
     public function update() {
         global $database;
+
+        $properties = $this->properties();
+
+        $properties_pairs = array();
+
+        foreach ($properties as $key => $value) {
+            $properties_pairs[] = "{$key}={$value}";
+        }
         $id = $database->escape_string($this->id);
-        $username = $database->escape_string($this->username);
-        $password = $database->escape_string($this->password);
-        $first_name = $database->escape_string($this->first_name);
-        $last_name = $database->escape_string($this->last_name);
+
         $sql = "
             UPDATE
                 " . self::$db_table . "
             SET
-                username = '$username',
-                password = '$password',
-                first_name = '$first_name',
-                last_name = '$last_name'
+                " . implode(',', $properties_pairs) . "
             WHERE
                 id = $id
         ";
+
         $database->query($sql);
         return (mysqli_affected_rows($database->connection) == 1) ? true : false;
     }

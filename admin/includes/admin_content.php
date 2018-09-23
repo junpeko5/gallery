@@ -32,18 +32,19 @@
 
 //            $picktures = new Pictures();
 
-            $user = new User();
-            $user->username = "Example_username";
-            $user->password = "Example_password";
-            $user->first_name = "John";
-            $user->last_name = "Doe";
-
-            $user->create();
-
-//            $user = User::find_user_by_id(2);
-//            $user->last_name = "Williams";
+//            $user = new User();
+//            $user->username = "Example_username";
+//            $user->password = "Example_password";
+//            $user->first_name = "John";
+//            $user->last_name = "Doe";
 //
-//            $user->update();
+//            $user->create();
+
+            $user = User::find_user_by_id(2);
+            $user->first_name = "Williams";
+            $user->last_name = "Smith";
+
+            $user->update();
 
 //            $user = User::find_user_by_id(8);
 //            $ret =$user->delete();
