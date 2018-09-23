@@ -71,10 +71,20 @@ class User {
         foreach (self::$db_table_fields as $db_field) {
             // property_exists — オブジェクトもしくはクラスにプロパティが存在するかどうかを調べる
             if (property_exists($this, $db_field)) {
-                $properties[$db_field] = "'" . $this->$db_field . "'";
+                $properties[$db_field] = $this->$db_field;
             }
         }
         return $properties;
+    }
+
+    protected function clean_properties() {
+        global $database;
+
+        $clean_properties = array();
+        foreach ($this->properties() as $key => $value) {
+            $clean_properties[$key] = $database->escape_string($value);
+        }
+        return $clean_properties;
     }
 
     public function save() {
@@ -84,14 +94,14 @@ class User {
     public function create() {
         global $database;
 
-        $properties = $this->properties();
+        $properties = $this->clean_properties();
 
         $sql = "
             INSERT INTO
                 " . self::$db_table . "
-                ( " . implode(",", array_keys($properties)) . ")
+                (" . implode(",", array_keys($properties)) . ")
             VALUES
-                (" . implode(',', array_values($properties)) . ")
+                ('" . implode("','", array_values($properties)) . "')
         ";
 
         if ($database->query($sql)) {
@@ -105,12 +115,12 @@ class User {
     public function update() {
         global $database;
 
-        $properties = $this->properties();
+        $properties = $this->clean_properties();
 
         $properties_pairs = array();
 
         foreach ($properties as $key => $value) {
-            $properties_pairs[] = "{$key}={$value}";
+            $properties_pairs[] = "{$key} = '{$value}'";
         }
         $id = $database->escape_string($this->id);
 
