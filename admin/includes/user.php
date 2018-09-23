@@ -3,6 +3,7 @@
 class User {
 
     protected static $db_table = "users";
+    protected static $db_table_fields = array('username', 'password', 'first_name', 'last_name');
     public $id;
     public $username;
     public $password;
@@ -63,12 +64,30 @@ class User {
         return array_key_exists($the_attribute, $object_properties);
     }
 
+    protected function properties() {
+
+//        return get_object_vars($this);
+        $properties = array();
+        foreach (self::$db_table_fields as $db_field) {
+            // property_exists — オブジェクトもしくはクラスにプロパティが存在するかどうかを調べる
+            if (property_exists($this, $db_field)) {
+                $properties[$db_field] = $this->$db_field;
+            }
+        }
+        return $properties;
+    }
+
     public function save() {
         return isset($this->id) ? $this->update() : $this->create();
     }
 
     public function create() {
         global $database;
+
+        $properties = $this->properties();
+        var_dump($properties);
+        var_dump(implode(',', array_values($properties)));
+        exit;
         $username = $database->escape_string($this->username);
         $password = $database->escape_string($this->password);
         $first_name = $database->escape_string($this->first_name);
@@ -76,15 +95,12 @@ class User {
         $sql = "
             INSERT INTO
                 " . self::$db_table . "
-                (username, password, first_name, last_name) 
+                ( " . implode(",", array_keys($properties)) . ")
             VALUES
-            (
-                '$username',
-                '$password',
-                '$first_name',
-                '$last_name'
-            )
+                (" . implode(',', array_values($properties)) . ")
         ";
+        var_dump($sql);
+        exit;
         if ($database->query($sql)) {
             $this->id = $database->the_insert_id();
             return true;
