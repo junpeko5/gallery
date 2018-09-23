@@ -32,13 +32,13 @@
 
 //            $picktures = new Pictures();
 
-//            $user = new User();
-//            $user->username = "Example_username";
-//            $user->password = "Example_password";
-//            $user->first_name = "John";
-//            $user->last_name = "Doe";
-//
-//            $user->create();
+            $user = new User();
+            $user->username = "Example_username";
+            $user->password = "Example_password";
+            $user->first_name = "John";
+            $user->last_name = "Doe";
+
+            $user->create();
 
 //            $user = User::find_user_by_id(2);
 //            $user->last_name = "Williams";
@@ -52,10 +52,10 @@
 //            $user->password = "justpassword";
 //            $user->save();
 
-            $user = new User();
-            $user->username = "takuya";
-            $user->password = "takuya";
-            $user->save();
+//            $user = new User();
+//            $user->username = "takuya";
+//            $user->password = "takuya";
+//            $user->save();
 
 
 
