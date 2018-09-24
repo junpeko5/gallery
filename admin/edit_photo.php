@@ -4,9 +4,23 @@ if (!$session->is_signed_in()) {
     redirect("login.php");
 }
 
-if (isset($_POST['update'])) {
-    echo 'itworks';
+if (empty($_GET['id'])) {
+    redirect("photos.php");
+} else {
+    $photo = Photo::find_by_id($_GET['id']);
+
+
+    if (isset($_POST['update'])) {
+        if ($photo) {
+            $photo->title = $_POST['title'];
+            $photo->caption = $_POST['caption'];
+            $photo->alternate_text = $_POST['alternate_text'];
+            $photo->description = $_POST['description'];
+        }
+    }
 }
+
+
 
 
 ?>
@@ -37,19 +51,19 @@ if (isset($_POST['update'])) {
                         <div class="col-md-8">
                             <div class="form-group">
                                 <label for="title">Title</label>
-                                <input type="text" name="title" class="form-control">
+                                <input type="text" name="title" class="form-control" value="<?php echo $photo->title; ?>">
                             </div>
                             <div class="form-group">
                                 <label for="caption">Caption</label>
-                                <input type="text" name="caption" class="form-control">
+                                <input type="text" name="caption" class="form-control" value="<?php echo $photo->caption; ?>">
                             </div>
                             <div class="form-group">
                                 <label for="caption">Alternate Text</label>
-                                <input type="text" name="alternate_text" class="form-control">
+                                <input type="text" name="alternate_text" class="form-control" value="<?php echo $photo->alternate_text; ?>">
                             </div>
                             <div class="form-group">
-                                <label for="caption">Description</label>
-                                <textarea class="form-control" name="description" cols="30" rows="10"></textarea>
+                                <label for="description">Description</label>
+                                <textarea class="form-control" name="description" cols="30" rows="10"><?php echo $photo->description; ?></textarea>
                             </div>
                         </div>
 
@@ -78,7 +92,7 @@ if (isset($_POST['update'])) {
                                     </div>
                                     <div class="info-box-footer clearfix">
                                         <div class="info-box-delete pull-left">
-                                            <a  href="delete_photo.php?id=<?php echo $photo->id; ?>" class="btn btn-danger btn-lg ">Delete</a>
+                                            <a href="delete_photo.php?id=<?php echo $photo->id; ?>" class="btn btn-danger btn-lg ">Delete</a>
                                         </div>
                                         <div class="info-box-update pull-right ">
                                             <input type="submit" name="update" value="Update" class="btn btn-primary btn-lg ">
