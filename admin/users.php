@@ -27,14 +27,14 @@ $users = User::find_all();
                 <div class="col-lg-12">
                     <h1 class="page-header">
                         Users
-                        <small>Subheading</small>
                     </h1>
+                    <a href="add_user.php" class="btn btn-primary">Add User</a>
                     <div class="col-md-12">
                         <table class="table table-hover">
                             <thead>
                             <tr>
                                 <th>Id</th>
-                                <th>Photo</th>
+                                <th>user</th>
                                 <th>User Name</th>
                                 <th>First Name</th>
                                 <th>Last Name</th>
@@ -45,7 +45,7 @@ $users = User::find_all();
                                 <tr>
                                     <td><?php echo $user->id; ?></td>
                                     <td>
-                                        <img class="admin-photo-thumbnail user_image" src="<?php echo $user->image_path_and_placeholder(); ?>" alt="">
+                                        <img class="admin-user-thumbnail user_image" src="<?php echo $user->image_path_and_placeholder(); ?>" alt="">
                                     </td>
                                     <td>
                                         <?php echo $user->username; ?>
