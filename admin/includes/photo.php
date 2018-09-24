@@ -22,9 +22,6 @@ class Photo extends Db_object {
     public $type;
     public $size;
 
-    public $tmp_path;
-    public $upload_directory = "images";
-
 
     public function picture_path() {
         return $this->upload_directory . DS . $this->filename;

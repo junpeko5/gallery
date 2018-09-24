@@ -3,19 +3,23 @@
 class User extends Db_object {
 
     protected static $db_table = "users";
-    protected static $db_table_fields = array('username', 'password', 'first_name', 'last_name', 'user_image');
+    protected static $db_table_fields = array(
+        'username',
+        'password',
+        'first_name',
+        'last_name',
+        'filename'
+    );
     public $id;
     public $username;
     public $password;
     public $first_name;
     public $last_name;
-    public $user_image;
-    public $upload_directory = 'images';
+    public $filename;
     public $image_placeholder = "http://placehold.it/400x400&text=image";
 
 
-    public function save_user_and_image() {
-
+    public function upload_photo() {
         if (!empty($this->errors)) {
             return false;
         }
@@ -32,10 +36,10 @@ class User extends Db_object {
         }
 
         if (move_uploaded_file($this->tmp_path, $target_path)) {
-            if ($this->create()) {
-                unset($this->tmp_path);
-                return true;
-            }
+
+            unset($this->tmp_path);
+            return true;
+
         } else {
             $this->errors[] = "the file directory probably does not have permission";
             return false;

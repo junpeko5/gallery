@@ -2,6 +2,8 @@
 
 class Db_object {
     protected static $db_table = "users";
+    public $tmp_path;
+    public $upload_directory = "images";
     public $upload_errors_array = array(
         UPLOAD_ERR_OK => "There is no error",
         UPLOAD_ERR_INI_SIZE => "The uploaded file exceeds the upload_max_filesize directive in ",
@@ -20,19 +22,31 @@ class Db_object {
     }
 
     public static function find_by_id($id) {
-        $the_result_array = static::find_by_query("SELECT * FROM " . static::$db_table . " WHERE id = $id LIMIT 1");
+        $the_result_array = static::find_by_query("
+            SELECT 
+                * 
+            FROM 
+                " . static::$db_table . " 
+            WHERE 
+                id = $id 
+            LIMIT 1
+        ");
         return !empty($the_result_array) ? array_shift($the_result_array) : false;
     }
 
     public function set_file($file) {
+//        echo '<pre>';
+//        var_dump($file);
+//        echo '</pre>';
+//        exit;
         if (empty($file) || !$file || !is_array($file)) {
             $this->errors[] = "There was no file uploaded here";
             return false;
-        } elseif ($file['error'] != 0) {
+        } elseif ($file['error'] !== 0) {
             $this->errors[] = $this->upload_errors_array[$file['error']];
             return false;
         } else {
-            $this->user_image = basename($file['name']);
+            $this->filename = basename($file['name']);
             $this->tmp_path = $file['tmp_name'];
             $this->type = $file['type'];
             $this->size = $file['size'];

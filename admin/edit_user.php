@@ -7,28 +7,31 @@ if (!$session->is_signed_in()) {
 if (empty($_GET['id'])) {
     redirect("users.php");
 } else {
+    $user = User::find_by_id($_GET['id']);
+    if (isset($_POST['update'])) {
+        if ($user) {
+            $user->username = $_POST['username'];
+            $user->first_name = $_POST['first_name'];
+            $user->last_name = $_POST['last_name'];
+            $user->password = $_POST['password'];
 
-}
+            // ファイルアップロードされない場合
+            if ($_FILES['filename']['error'] !== 0) {
+                $user->save();
+            } else {
+                $user->set_file($_FILES['filename']);
 
-$user = User::find_by_id($_GET['id']);
-if (isset($_POST['update'])) {
-    if ($user) {
-        $user->username = $_POST['username'];
-        $user->first_name = $_POST['first_name'];
-        $user->last_name = $_POST['last_name'];
-        $user->password = $_POST['password'];
+                $ret = $user->upload_photo();
 
-        if (empty($_FILES['user_image'])) {
-            $user->save();
-        } else {
-            $user->set_file($_FILES['user_image']);
-            $user->save_user_and_image();
-            $user->save();
+                $user->save();
+
+            }
             redirect("edit_user.php?id={$user->id}");
         }
-
     }
 }
+
+
 
 ?>
 
@@ -60,24 +63,24 @@ if (isset($_POST['update'])) {
                     <form action="" method="post" enctype="multipart/form-data">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <input type="file" name="user_image">
+                                <input type="file" name="filename">
                             </div>
                             <div class="form-group">
                                 <label for="username">Username</label>
-                                <input type="text" name="username" class="form-control" value="<?php echo $user->username; ?>">
+                                <input id="username" type="text" name="username" class="form-control" value="<?php echo $user->username; ?>">
                             </div>
 
                             <div class="form-group">
                                 <label for="first_name">First Name</label>
-                                <input type="text" name="first_name" class="form-control" value="<?php echo $user->first_name; ?>">
+                                <input id="first_name" type="text" name="first_name" class="form-control" value="<?php echo $user->first_name; ?>">
                             </div>
                             <div class="form-group">
                                 <label for="last_name">Last Name</label>
-                                <input type="text" name="last_name" class="form-control" value="<?php echo $user->last_name; ?>">
+                                <input id="last_name" type="text" name="last_name" class="form-control" value="<?php echo $user->last_name; ?>">
                             </div>
                             <div class="form-group">
                                 <label for="password">Password</label>
-                                <input type="password" name="password" class="form-control" value="<?php echo $user->password; ?>">
+                                <input id="password" type="password" name="password" class="form-control" value="<?php echo $user->password; ?>">
                             </div>
                             <div class="form-group">
                                 <a class="btn btn-danger" href="delete_user.php?id=<?php echo $user->id; ?>">Delete</a>
