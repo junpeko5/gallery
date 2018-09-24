@@ -1,6 +1,6 @@
-<?php ob_start(); ?>
-<?php require_once("init.php"); ?>
-
+<?php ob_start();
+require_once("init.php");
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,6 +22,8 @@
 
     <!-- Custom Fonts -->
     <link href="/gallery/admin/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <link href="/gallery/admin/css/styles.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
