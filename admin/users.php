@@ -45,15 +45,16 @@ $users = User::find_all();
                                 <tr>
                                     <td><?php echo $user->id; ?></td>
                                     <td>
-                                        <img class="admin-photo-thumbnail" src="<?php echo $user->user_image; ?>" alt="">
+                                        <img class="admin-photo-thumbnail user_image" src="<?php echo $user->image_path_and_placeholder(); ?>" alt="">
+                                    </td>
+                                    <td>
+                                        <?php echo $user->username; ?>
                                         <div class="action_links">
                                             <a href="delete_user.php?id=<?php echo $user->id; ?>">Delete</a>
                                             <a href="edit_user.php?id=<?php echo $user->id; ?>">Edit</a>
                                             <a href="#">View</a>
                                         </div>
                                     </td>
-
-                                    <td><?php echo $user->username; ?></td>
                                     <td><?php echo $user->first_name; ?></td>
                                     <td><?php echo $user->last_name; ?></td>
                                 </tr>
