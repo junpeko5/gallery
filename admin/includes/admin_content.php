@@ -8,7 +8,13 @@
                 <small>Subheading</small>
             </h1>
             <?php
-//                $result_set = User::find_all_users();
+//                            $found_user = User::find_by_id(4);
+//                            echo $found_user->username;
+//            $photo = Photo::find_by_id(4);
+//            echo $photo->filename;
+
+                            $result_set = Photo::find_all();
+                            var_dump($result_set);
 //
 //                while($row = mysqli_fetch_array($result_set)) {
 //                    echo $row['username'] . "<br>";
@@ -47,9 +53,9 @@
 //            $user = User::find_user_by_id(8);
 //            $ret =$user->delete();
 
-            $user = Photo::find_by_id(2);
-            $user->description = "just password";
-            $user->save();
+//            $user = Photo::find_by_id(2);
+//            $user->description = "just password";
+//            $user->save();
 
 //            $user = new User();
 //            $user->username = "takuya";

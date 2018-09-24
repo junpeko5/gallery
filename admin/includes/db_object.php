@@ -8,8 +8,8 @@ class Db_object {
         return static::find_by_query("SELECT * FROM " . static::$db_table);
     }
 
-    public static function find_by_id($user_id) {
-        $the_result_array = static::find_by_query("SELECT * FROM " . static::$db_table . " WHERE id = $user_id LIMIT 1");
+    public static function find_by_id($id) {
+        $the_result_array = static::find_by_query("SELECT * FROM " . static::$db_table . " WHERE id = $id LIMIT 1");
         return !empty($the_result_array) ? array_shift($the_result_array) : false;
     }
 
@@ -93,6 +93,47 @@ class Db_object {
         } else {
             return false;
         }
+    }
+
+    public function save() {
+
+        return isset($this->id) ? $this->update() : $this->create();
+    }
+    public function update() {
+        global $database;
+
+        $properties = $this->clean_properties();
+
+        $properties_pairs = array();
+
+        foreach ($properties as $key => $value) {
+            $properties_pairs[] = "{$key} = '{$value}'";
+        }
+
+        $id = $database->escape_string($this->id);
+
+        $sql = "
+            UPDATE
+                " . static::$db_table . "
+            SET
+                " . implode(',', $properties_pairs) . "
+            WHERE
+                id = $id
+        ";
+
+        $database->query($sql);
+        return (mysqli_affected_rows($database->connection) == 1) ? true : false;
+    }
+
+    public function delete() {
+        global $database;
+        $this->id = $database->escape_string($this->id);
+        $sql = "
+            DELETE FROM " . static::$db_table . " WHERE id = '$this->id' LIMIT 1
+        ";
+        $database->query($sql);
+        return (mysqli_affected_rows($database->connection) == 1) ? true : false;
+
     }
 
 
