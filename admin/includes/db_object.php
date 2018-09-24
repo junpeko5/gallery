@@ -110,6 +110,7 @@ class Db_object {
 
         return isset($this->id) ? $this->update() : $this->create();
     }
+
     public function update() {
         global $database;
 
@@ -118,7 +119,7 @@ class Db_object {
         $properties_pairs = array();
 
         foreach ($properties as $key => $value) {
-            $properties_pairs[] = "{$key} = '{$value}'";
+            $properties_pairs[] = "{$key} = {$value}";
         }
 
         $id = $database->escape_string($this->id);
@@ -131,6 +132,7 @@ class Db_object {
             WHERE
                 id = $id
         ";
+
 
         $database->query($sql);
         return (mysqli_affected_rows($database->connection) == 1) ? true : false;
