@@ -61,17 +61,18 @@ class Db_object {
 
         $clean_properties = array();
         foreach ($this->properties() as $key => $value) {
-            $clean_properties[$key] = $database->escape_string($value);
+            if (!empty($value)) {
+                $clean_properties[$key] = $database->escape_string($value);
+                if (is_string($value)) {
+                    $clean_properties[$key] = "'" . $clean_properties[$key] . "'";
+                }
+            }
         }
         return $clean_properties;
     }
 
 
 
-
-    public function save() {
-        return isset($this->id) ? $this->update() : $this->create();
-    }
     
     public function create() {
         global $database;
@@ -83,7 +84,7 @@ class Db_object {
                 " . static::$db_table . "
                 (" . implode(",", array_keys($properties)) . ")
             VALUES
-                ('" . implode("','", array_values($properties)) . "')
+                (" . implode(",", array_values($properties)) . ")
         ";
 
         if ($database->query($sql)) {
@@ -94,39 +95,5 @@ class Db_object {
         }
     }
 
-    public function update() {
-        global $database;
 
-        $properties = $this->clean_properties();
-
-        $properties_pairs = array();
-
-        foreach ($properties as $key => $value) {
-            $properties_pairs[] = "{$key} = '{$value}'";
-        }
-        $id = $database->escape_string($this->id);
-
-        $sql = "
-            UPDATE
-                " . static::$db_table . "
-            SET
-                " . implode(',', $properties_pairs) . "
-            WHERE
-                id = $id
-        ";
-
-        $database->query($sql);
-        return (mysqli_affected_rows($database->connection) == 1) ? true : false;
-    }
-
-    public function delete() {
-        global $database;
-        $this->id = $database->escape_string($this->id);
-        $sql = "
-            DELETE FROM " . static::$db_table . " WHERE id = '$this->id' LIMIT 1
-        ";
-        $database->query($sql);
-        return (mysqli_affected_rows($database->connection) == 1) ? true : false;
-
-    }
 }

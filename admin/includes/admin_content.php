@@ -22,9 +22,9 @@
 //                echo $user->username;
 //                echo $found_user['username'];
 
-//                $users = User::find_all();
-//                foreach ($users as $user) {
-//                    echo $user->username . "<br>";
+//                $photos = Photo::find_all();
+//                foreach ($photos as $photo) {
+//                    echo $photo->title . "<br>";
 //                }
 //
 //            $found_user = User::find_user_by_id(2);
@@ -32,14 +32,12 @@
 
 //            $picktures = new Pictures();
 
-//            $user = new User();
-//            $user->username = "Example_username";
-//            $user->password = "Example_password";
-//            $user->first_name = "John";
-//            $user->last_name = "Doe";
-//
-//            $user->create();
+//            $photo = new Photo();
+//            $photo->title = "Just some test title 2";
+//            $photo->size = 30;
 
+//            $photo->create();
+//            $photo->update();
 //            $user = User::find_user_by_id(2);
 //            $user->first_name = "Williams";
 //            $user->last_name = "Konishi";
@@ -49,9 +47,9 @@
 //            $user = User::find_user_by_id(8);
 //            $ret =$user->delete();
 
-//            $user = User::find_user_by_id(4);
-//            $user->password = "justpassword";
-//            $user->save();
+            $user = Photo::find_by_id(2);
+            $user->description = "just password";
+            $user->save();
 
 //            $user = new User();
 //            $user->username = "takuya";
