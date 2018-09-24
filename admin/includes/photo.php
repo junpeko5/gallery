@@ -55,11 +55,12 @@ class Photo extends Db_object {
                 return false;
             }
 
-            if (empty($file) || !$file || !is_array($file)) {
+            if (empty($this->filename) || empty($this->tmp_path) ) {
                 $this->errors[] = "The file was not available";
                 return false;
             }
             $target_path = SITE_ROOT . DS . 'admin' . DS . $this->upload_directory . DS . $this->filename;
+
             if (file_exists($target_path)) {
                 $this->errors[] = "The file {$this->filename} already exists";
                 return false;
