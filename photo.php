@@ -1,6 +1,14 @@
 <?php
+
+require_once(dirname(__FILE__) . "/admin/includes/init.php");
+if (empty($_GET['id'])) {
+    redirect("index.php");
+}
+
+$photo = Photo::find_by_id($_GET['id']);
+
 if (isset($_POST['submit'])) {
-    echo 'hello';
+
 }
 ?>
 <!DOCTYPE html>
