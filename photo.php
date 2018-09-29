@@ -1,6 +1,7 @@
 <?php
 
 require_once(dirname(__FILE__) . "/admin/includes/init.php");
+
 if (empty($_GET['id'])) {
     redirect("index.php");
 }
@@ -13,7 +14,7 @@ if (isset($_POST['submit'])) {
     $new_comment = Comment::create_comment($photo->id, $author, $body);
 
     if ($new_comment && $new_comment->save()) {
-        redirect("photo.php?id({$photo->id}");
+        redirect("photo.php?id={$photo->id}");
     } else {
         $message = "There was some problems saving";
     }
@@ -21,7 +22,8 @@ if (isset($_POST['submit'])) {
     $author = "";
     $body = "";
 }
-Comment::find_the_comments($photo->id);
+$comments = Comment::find_the_comments($photo->id);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -144,20 +146,22 @@ Comment::find_the_comments($photo->id);
                 <hr>
 
                 <!-- Posted Comments -->
+                <?php foreach ($comments as $comment) : ?>
 
-                <!-- Comment -->
-                <div class="media">
-                    <a class="pull-left" href="#">
-                        <img class="media-object" src="http://placehold.it/64x64" alt="">
-                    </a>
-                    <div class="media-body">
-                        <h4 class="media-heading">Start Bootstrap
-                            <small>August 25, 2014 at 9:30 PM</small>
-                        </h4>
-                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+                    <!-- Comment -->
+                    <div class="media">
+                        <a class="pull-left" href="#">
+                            <img class="media-object" src="http://placehold.it/64x64" alt="">
+                        </a>
+                        <div class="media-body">
+                            <h4 class="media-heading"><?php echo $comment->author; ?>
+                                <small>August 25, 2014 at 9:30 PM</small>
+                            </h4>
+                            <?php echo $comment->body; ?>
+                        </div>
                     </div>
-                </div>
 
+                <?php endforeach; ?>
 
 
 
@@ -245,5 +249,4 @@ Comment::find_the_comments($photo->id);
     <script src="js/bootstrap.min.js"></script>
 
 </body>
-
 </html>

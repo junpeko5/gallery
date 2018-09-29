@@ -10,4 +10,5 @@ require_once(dirname(__FILE__) . "/database.php");
 require_once(dirname(__FILE__) . "/db_object.php");
 require_once(dirname(__FILE__) . "/user.php");
 require_once(dirname(__FILE__) . "/photo.php");
+require_once(dirname(__FILE__) . "/comment.php");
 require_once(dirname(__FILE__) . "/session.php");
