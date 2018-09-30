@@ -6,8 +6,18 @@ $page = !empty($_GET['page']) ? (int)$_GET['page'] : 1;
 $items_per_page = 4;
 
 $items_total_count = Photo::count_all();
+$paginate = new Paginate($page, $items_per_page, $items_total_count);
 
-$photos = Photo::find_all();
+$sql = "
+    SELECT
+        *
+    FROM
+        photos
+    LIMIT {$items_per_page} 
+    OFFSET {$paginate->offset()}
+";
+$photos = Photo::find_by_query($sql);
+
 ?>
 <div class="row">
     <!-- Blog Entries Column -->
