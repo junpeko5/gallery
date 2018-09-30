@@ -34,12 +34,15 @@ $photos = Photo::find_by_query($sql);
         <div class="row">
             <ul class="pager">
                 <?php if ($paginate->page_total() > 1) : ?>
+                    <?php if ($paginate->has_previous()) : ?>
+                        <li class="previous"><a href="index.php?page=<?php echo $paginate->previous(); ?>">Previous</a></li>
+                    <?php endif; ?>
+                <?php endif; ?>
+                <?php if ($paginate->page_total() > 1) : ?>
                     <?php if ($paginate->has_next()) : ?>
                         <li class="next"><a href="index.php?page=<?php echo $paginate->next(); ?>">Next</a></li>
                     <?php endif; ?>
                 <?php endif; ?>
-
-                <li class="previous"><a href="">Previous</a></li>
             </ul>
         </div>
     </div>
