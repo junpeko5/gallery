@@ -29,7 +29,7 @@ $(document).ready(function() {
             type: "post",
             success: function(data) {
                 if (!data.error) {
-                    alert(image_name);
+
                 }
             }
         });
