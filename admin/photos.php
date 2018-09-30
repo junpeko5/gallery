@@ -38,6 +38,7 @@ $photos = Photo::find_all();
                                     <th>File Name</th>
                                     <th>Title</th>
                                     <th>Size</th>
+                                    <th>Comments</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -55,6 +56,11 @@ $photos = Photo::find_all();
                                     <td><?php echo $photo->filename; ?></td>
                                     <td><?php echo $photo->title; ?></td>
                                     <td><?php echo $photo->size; ?></td>
+                                    <td><?php
+                                            $comments = Comment::find_the_comments($photo->id);
+                                            echo count($comments);
+                                        ?>
+                                    </td>
                                 </tr>
                             <?php endforeach; ?>
                             </tbody>
