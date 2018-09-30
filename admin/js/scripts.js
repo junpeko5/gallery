@@ -1,1 +1,6 @@
-tinymce.init({ selector:'textarea' });
+$(function() {
+
+
+
+    tinymce.init({ selector:'textarea' });
+});
