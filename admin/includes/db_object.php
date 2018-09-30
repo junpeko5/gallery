@@ -170,8 +170,10 @@ class Db_object {
     public function delete() {
         global $database;
         $this->id = $database->escape_string($this->id);
+        $table = static::$db_table;
+
         $sql = "
-            DELETE FROM " . static::$db_table . " WHERE id = '$this->id' LIMIT 1
+            DELETE FROM {$table} WHERE id = $this->id LIMIT 1
         ";
         $database->query($sql);
         return (mysqli_affected_rows($database->connection) == 1) ? true : false;

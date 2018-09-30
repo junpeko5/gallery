@@ -55,11 +55,12 @@ class User extends Db_object {
         global $database;
         $username = $database->escape_string($username);
         $password = $database->escape_string($password);
+        $table = self::$db_table;
 
         $sql = "
             SELECT * 
             FROM 
-                " . self::$db_table . " 
+                {$table}
             WHERE username = '{$username}' 
             AND password = '{$password}' 
             LIMIT 1
@@ -67,5 +68,11 @@ class User extends Db_object {
 
         $the_result_array = self::find_by_query($sql);
         return !empty($the_result_array) ? array_shift($the_result_array) : false;
+    }
+
+    public function ajax_save_user_image($user_image, $user_id) {
+        $this->filename = $user_image;
+        $this->id = $user_id;
+        $this->save();
     }
 }
