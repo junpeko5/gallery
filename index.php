@@ -1,6 +1,12 @@
 <?php
 include(dirname(__FILE__) . "/includes/header.php");
 
+$page = !empty($_GET['page']) ? (int)$_GET['page'] : 1;
+
+$items_per_page = 4;
+
+$items_total_count = Photo::count_all();
+
 $photos = Photo::find_all();
 ?>
 <div class="row">
