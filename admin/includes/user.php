@@ -8,14 +8,14 @@ class User extends Db_object {
         'password',
         'first_name',
         'last_name',
-        'filename'
+        'user_image'
     );
     public $id;
     public $username;
     public $password;
     public $first_name;
     public $last_name;
-    public $filename;
+    public $user_image;
     public $image_placeholder = "http://placehold.it/400x400&text=image";
 
 
@@ -24,14 +24,14 @@ class User extends Db_object {
             return false;
         }
 
-        if (empty($this->filename) || empty($this->tmp_path) ) {
+        if (empty($this->user_image) || empty($this->tmp_path) ) {
             $this->errors[] = "The file was not available";
             return false;
         }
-        $target_path = SITE_ROOT . DS . 'admin' . DS . $this->upload_directory . DS . $this->filename;
+        $target_path = SITE_ROOT . DS . 'admin' . DS . $this->upload_directory . DS . $this->user_image;
 
         if (file_exists($target_path)) {
-            $this->errors[] = "The file {$this->filename} already exists";
+            $this->errors[] = "The file {$this->user_image} already exists";
             return false;
         }
 
@@ -48,7 +48,7 @@ class User extends Db_object {
 
 
     public function image_path_and_placeholder() {
-        return empty($this->filename) ? $this->image_placeholder : $this->upload_directory . DS . $this->filename;
+        return empty($this->user_image) ? $this->image_placeholder : $this->upload_directory . DS . $this->user_image;
     }
 
     public static function verify_user($username, $password) {
@@ -58,7 +58,8 @@ class User extends Db_object {
         $table = self::$db_table;
 
         $sql = "
-            SELECT * 
+            SELECT 
+                * 
             FROM 
                 {$table}
             WHERE username = '{$username}' 
@@ -71,8 +72,22 @@ class User extends Db_object {
     }
 
     public function ajax_save_user_image($user_image, $user_id) {
-        $this->filename = $user_image;
+        global $database;
+        $user_image = $database->escape_string($user_image);
+        $user_id = $database->escape_string($user_id);
+        $this->user_image = $user_image;
         $this->id = $user_id;
-        $this->save();
+        $table = self::$db_table;
+        $sql = "
+            UPDATE
+                $table
+            SET
+                user_image = '{$this->user_image}'
+            WHERE
+                id = {$this->id}
+        ";
+        $update_image = $database->query($sql);
+
+        echo $this->image_path_and_placeholder();
     }
 }
