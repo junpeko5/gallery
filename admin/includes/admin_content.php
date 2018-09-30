@@ -1,13 +1,11 @@
 <div class="container-fluid">
-
     <!-- Page Heading -->
     <div class="row">
         <div class="col-lg-12">
             <h1 class="page-header">
-                Admin Dashboard
-                <small>Subheading</small>
+                Admin
+                <small>Dashboard</small>
             </h1>
-
             <div class="row">
                 <div class="col-lg-3 col-md-6">
                     <div class="panel panel-primary">
@@ -32,7 +30,6 @@
                         </a>
                     </div>
                 </div>
-
                 <div class="col-lg-3 col-md-6">
                     <div class="panel panel-green">
                         <div class="panel-heading">
@@ -46,7 +43,7 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="#">
+                        <a href="photos.php">
                             <div class="panel-footer">
                                 <span class="pull-left">Total Photos in Gallery</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -55,8 +52,6 @@
                         </a>
                     </div>
                 </div>
-
-
                 <div class="col-lg-3 col-md-6">
                     <div class="panel panel-yellow">
                         <div class="panel-heading">
@@ -71,7 +66,7 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="#">
+                        <a href="users.php">
                             <div class="panel-footer">
                                 <span class="pull-left">Total Users</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -94,7 +89,7 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="#">
+                        <a href="comments.php">
                             <div class="panel-footer">
                                 <span class="pull-left">Total Comments</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -103,8 +98,6 @@
                         </a>
                     </div>
                 </div>
-
-
             </div> <!--First Row-->
             <div class="row">
                 <div id="piechart" style="width: 900px; height: 500px;"></div>
@@ -113,6 +106,5 @@
         </div>
     </div>
     <!-- /.row -->
-
 </div>
 <!-- /.container-fluid -->

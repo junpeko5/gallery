@@ -51,8 +51,6 @@ $photos = Photo::find_by_query($sql);
                     }
                 }
                 ?>
-<!--                -->
-
             </ul>
         </div>
     </div>
