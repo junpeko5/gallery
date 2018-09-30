@@ -6,7 +6,7 @@ require_once(dirname(__FILE__) . "/admin/includes/init.php");
 if (empty($_GET['id'])) {
     redirect("index.php");
 }
-
+// idがあるかのチェックが必要
 $photo = Photo::find_by_id($_GET['id']);
 
 if (isset($_POST['submit'])) {
@@ -24,6 +24,7 @@ if (isset($_POST['submit'])) {
     $body = "";
 }
 $comments = Comment::find_the_comments($photo->id);
+
 
 ?>
 

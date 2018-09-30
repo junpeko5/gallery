@@ -1,7 +1,7 @@
 <?php
 
 class Db_object {
-    protected static $db_table = "users";
+    protected static $db_table;
     public $tmp_path;
     public $upload_directory = "images";
     public $upload_errors_array = array(
